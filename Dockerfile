@@ -3,19 +3,17 @@
 # ----------------------------------------------------------------------------
 # Estágio 1: compilar o binário do PocketBase
 # ----------------------------------------------------------------------------
-FROM golang:1.23-alpine AS builder
+FROM golang:1.25-alpine AS builder
 
 WORKDIR /src
 
-# Copia dependências do Go
+RUN apk add --no-cache build-base gcc musl-dev
+
 COPY go.mod go.sum* ./
 RUN go mod download
 
-# Copia o restante do código
 COPY . .
 
-# Compila para Linux
-# Se o projeto usa SQLite/libsql, normalmente precisa de CGO habilitado
 RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o /out/pocketbase .
 
 # ----------------------------------------------------------------------------
@@ -30,20 +28,13 @@ RUN addgroup -g 1001 pocketbase \
 
 WORKDIR /app
 
-# Copia o binário compilado do estágio anterior
 COPY --from=builder /out/pocketbase /app/pocketbase
 RUN chmod +x /app/pocketbase
 
-# Estrutura do PocketBase
 RUN mkdir -p /app/pb_public /app/pb_hooks /app/pb_migrations /app/pb_data \
     && chown -R pocketbase:pocketbase /app
 
-# Arquivos do projeto PocketBase
-#COPY --chown=pocketbase:pocketbase pb_hooks/ /app/pb_hooks/
-#COPY --chown=pocketbase:pocketbase pb_migrations/ /app/pb_migrations/
-#COPY --chown=pocketbase:pocketbase pb_public/ /app/pb_public/
-
-# Variáveis de ambiente
+ARG URL_LIBSQL_TURSO
 ENV TZ=America/Sao_Paulo \
     PB_PORT=8090 \
     URL_LIBSQL_TURSO=${URL_LIBSQL_TURSO}
