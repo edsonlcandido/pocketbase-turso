@@ -1,6 +1,6 @@
 # PocketBase + Turso (libSQL)
 
-Este projeto é uma implementação customizada do [PocketBase](https://pocketbase.io/) que utiliza o [Turso (libSQL)](https://turso.tech/) como banco de dados principal, em vez do SQLite local padrão.
+Este projeto é uma implementação customizada do [PocketBase](https://pocketbase.io/) **v0.39.10** que utiliza o [Turso (libSQL)](https://turso.tech/) como banco de dados principal, em vez do SQLite local padrão.
 
 Isso permite que você tenha uma instância do PocketBase rodando localmente ou em containers (Edge/Serverless) enquanto seus dados permanecem sincronizados em um banco de dados distribuído na nuvem.
 
