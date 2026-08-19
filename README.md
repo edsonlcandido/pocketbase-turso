@@ -1,6 +1,6 @@
 # PocketBase + Turso (libSQL)
 
-Este projeto é uma implementação customizada do [PocketBase](https://pocketbase.io/) **v0.39.10** que utiliza o [Turso (libSQL)](https://turso.tech/) como banco de dados principal, em vez do SQLite local padrão.
+Este projeto é uma implementação customizada do [PocketBase](https://pocketbase.io/) **v0.39.11** que utiliza o [Turso (libSQL)](https://turso.tech/) como banco de dados principal, em vez do SQLite local padrão.
 
 Isso permite que você tenha uma instância do PocketBase rodando localmente ou em containers (Edge/Serverless) enquanto seus dados permanecem sincronizados em um banco de dados distribuído na nuvem.
 
@@ -19,10 +19,16 @@ Isso permite que você tenha uma instância do PocketBase rodando localmente ou 
     ```
 
 2.  **Configure suas credenciais:**
-    Abra o arquivo `main.go` e substitua a variável `tursoUrl` pela sua URL de conexão completa (incluindo o token):
-    ```go
-    tursoUrl := "libsql://seu-db.turso.io?authToken=seu-token-aqui"
+    Defina as variáveis de ambiente com as URLs de conexão do Turso (incluindo o token):
+    ```bash
+    export URL_LIBSQL_TURSO="libsql://seu-db.turso.io?authToken=seu-token-aqui"
+    export URL_LIBSQL_TURSO_AUX="libsql://seu-db-aux.turso.io?authToken=seu-token-aux-aqui"
     ```
+
+    | Variável | Obrigatória | Descrição |
+    |---|---|---|
+    | `URL_LIBSQL_TURSO` | ✅ Sim | URL do banco principal (`data.db`) |
+    | `URL_LIBSQL_TURSO_AUX` | ⚠️ Recomendada | URL do banco auxiliar (`auxiliary.db`). Se não definida, usa o mesmo valor de `URL_LIBSQL_TURSO`, o que **não é recomendado** pois pode causar colisão de tabelas entre `data.db` e `auxiliary.db`. Crie um database separado no Turso para o banco auxiliar. |
 
 3.  **Instale as dependências:**
     ```bash
@@ -59,7 +65,7 @@ CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o pocketbase
 *   `main.go`: Contém a lógica de inicialização e o desvio da conexão para o Turso.
 *   `/pb_data`: Pasta criada automaticamente pelo PocketBase.
     *   `data.db`: Ficará vazio/mínimo, pois os dados estão no Turso.
-    *   `auxiliary.db`: Continua sendo usado localmente para logs de requisições.
+    *   `auxiliary.db`: Conectado ao banco auxiliar no Turso via `URL_LIBSQL_TURSO_AUX`. **Recomenda-se usar um database separado no Turso** para evitar colisão de tabelas com `data.db`.
     *   `/storage`: Guarda os arquivos de upload (fotos, docs). **Nota:** Arquivos de upload não vão para o Turso, ficam nesta pasta.
 
 ## ⚠️ Observações Importantes
