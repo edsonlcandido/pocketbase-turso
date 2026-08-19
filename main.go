@@ -24,17 +24,26 @@ func main() {
 		log.Fatal("URL_LIBSQL_TURSO não definida")
 	}
 
+	auxTursoURL := os.Getenv("URL_LIBSQL_TURSO_AUX")
+	if auxTursoURL == "" {
+		auxTursoURL = tursoURL
+	}
+
 	app := pocketbase.NewWithConfig(pocketbase.Config{
 		DBConnect: func(dbPath string) (*dbx.DB, error) {
 			fmt.Printf("Verificando conexão para: %s\n", dbPath)
 
-			if strings.HasSuffix(dbPath, "data.db") {
-				fmt.Println("--- CONECTANDO AO TURSO (NUVEM) ---")
+			switch {
+			case strings.HasSuffix(dbPath, "data.db"):
+				fmt.Println("--- CONECTANDO data.db AO TURSO (NUVEM) ---")
 				return dbx.Open("libsql", tursoURL)
+			case strings.HasSuffix(dbPath, "auxiliary.db"):
+				fmt.Println("--- CONECTANDO auxiliary.db AO TURSO (NUVEM) ---")
+				return dbx.Open("libsql", auxTursoURL)
+			default:
+				fmt.Println("--- CONECTANDO AO BANCO LOCAL (LOGS) ---")
+				return core.DefaultDBConnect(dbPath)
 			}
-
-			fmt.Println("--- CONECTANDO AO BANCO LOCAL (LOGS) ---")
-			return core.DefaultDBConnect(dbPath)
 		},
 	})
 

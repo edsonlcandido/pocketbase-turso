@@ -35,9 +35,11 @@ RUN mkdir -p /app/pb_public /app/pb_hooks /app/pb_migrations /app/pb_data \
     && chown -R pocketbase:pocketbase /app
 
 ARG URL_LIBSQL_TURSO
+ARG URL_LIBSQL_TURSO_AUX
 ENV TZ=America/Sao_Paulo \
     PB_PORT=8090 \
-    URL_LIBSQL_TURSO=${URL_LIBSQL_TURSO}
+    URL_LIBSQL_TURSO=${URL_LIBSQL_TURSO} \
+    URL_LIBSQL_TURSO_AUX=${URL_LIBSQL_TURSO_AUX}
 
 EXPOSE 8090
 
