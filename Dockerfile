@@ -27,7 +27,10 @@ FROM debian:bookworm-slim
 
 WORKDIR /app
 
-COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates tzdata \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY --from=builder /out/pocketbase /app/pocketbase
 COPY --from=builder --chown=1001:1001 /out/app /app
 
@@ -35,8 +38,6 @@ ENV TZ=America/Sao_Paulo \
     PB_PORT=8090
 
 EXPOSE 8090
-
-VOLUME ["/app/pb_data"]
 
 USER 1001:1001
 
