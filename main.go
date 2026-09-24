@@ -26,7 +26,7 @@ func main() {
 
 	auxTursoURL := os.Getenv("URL_LIBSQL_TURSO_AUX")
 	if auxTursoURL == "" {
-		auxTursoURL = tursoURL
+		log.Fatal("URL_LIBSQL_TURSO_AUX não definida")
 	}
 
 	app := pocketbase.NewWithConfig(pocketbase.Config{
