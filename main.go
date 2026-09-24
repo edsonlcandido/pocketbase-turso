@@ -19,15 +19,24 @@ func init() {
 	dbx.BuilderFuncMap["libsql"] = dbx.BuilderFuncMap["sqlite3"]
 }
 
-func main() {
-	tursoURL := os.Getenv("URL_LIBSQL_TURSO")
+func loadTursoURLs(getenv func(string) string) (string, string, error) {
+	tursoURL := getenv("URL_LIBSQL_TURSO")
 	if tursoURL == "" {
-		log.Fatal("URL_LIBSQL_TURSO não definida")
+		return "", "", fmt.Errorf("URL_LIBSQL_TURSO não definida")
 	}
 
-	auxTursoURL := os.Getenv("URL_LIBSQL_TURSO_AUX")
+	auxTursoURL := getenv("URL_LIBSQL_TURSO_AUX")
 	if auxTursoURL == "" {
-		log.Fatal("URL_LIBSQL_TURSO_AUX não definida")
+		return "", "", fmt.Errorf("URL_LIBSQL_TURSO_AUX não definida")
+	}
+
+	return tursoURL, auxTursoURL, nil
+}
+
+func main() {
+	tursoURL, auxTursoURL, err := loadTursoURLs(os.Getenv)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	app := pocketbase.NewWithConfig(pocketbase.Config{
