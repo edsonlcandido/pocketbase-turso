@@ -1,12 +1,12 @@
 # PocketBase + Turso (libSQL)
 
-Este projeto é uma implementação customizada do [PocketBase](https://pocketbase.io/) **v0.39.11** que utiliza o [Turso (libSQL)](https://turso.tech/) como banco de dados principal, em vez do SQLite local padrão.
+Este projeto é uma implementação customizada do [PocketBase](https://pocketbase.io/) **v0.40.4** que utiliza o [Turso (libSQL)](https://turso.tech/) como banco de dados principal, em vez do SQLite local padrão.
 
 Isso permite que você tenha uma instância do PocketBase rodando localmente ou em containers (Edge/Serverless) enquanto seus dados permanecem sincronizados em um banco de dados distribuído na nuvem.
 
 ## 📋 Pré-requisitos
 
-*   [Go 1.21](https://go.dev/dl/) ou superior instalado.
+*   [Go 1.27](https://go.dev/dl/) ou superior instalado.
 *   Uma conta no [Turso](https://turso.tech/) e um banco de dados criado.
 *   URL e Token do seu banco de dados Turso.
 

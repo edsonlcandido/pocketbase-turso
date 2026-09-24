@@ -3,7 +3,7 @@
 # ----------------------------------------------------------------------------
 # Estágio 1: compilar o binário do PocketBase
 # ----------------------------------------------------------------------------
-FROM golang:1.25-alpine AS builder
+FROM golang:1.27-alpine AS builder
 
 WORKDIR /src
 
