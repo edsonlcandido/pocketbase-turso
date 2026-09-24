@@ -27,6 +27,7 @@ FROM debian:bookworm-slim
 
 WORKDIR /app
 
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=builder /out/pocketbase /app/pocketbase
 COPY --from=builder --chown=1001:1001 /out/app /app
 
