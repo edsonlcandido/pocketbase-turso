@@ -34,6 +34,8 @@ RUN apt-get update \
 COPY --from=builder /out/pocketbase /app/pocketbase
 COPY --from=builder --chown=1001:1001 /out/app /app
 
+RUN chmod +x /app/pocketbase
+
 ENV TZ=America/Sao_Paulo \
     PB_PORT=8090 \
     GODEBUG=x509usefallbackroots=1
