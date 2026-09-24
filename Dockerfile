@@ -35,7 +35,8 @@ COPY --from=builder /out/pocketbase /app/pocketbase
 COPY --from=builder --chown=1001:1001 /out/app /app
 
 ENV TZ=America/Sao_Paulo \
-    PB_PORT=8090
+    PB_PORT=8090 \
+    GODEBUG=x509usefallbackroots=1
 
 EXPOSE 8090
 

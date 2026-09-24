@@ -11,6 +11,7 @@ import (
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
+	_ "golang.org/x/crypto/x509roots/fallback"
 	_ "github.com/tursodatabase/libsql-client-go/libsql"
 )
 
