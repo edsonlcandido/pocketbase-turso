@@ -19,13 +19,11 @@ RUN mkdir -p /out/app/pb_public /out/app/pb_hooks /out/app/pb_migrations /out/ap
 # ----------------------------------------------------------------------------
 # Estágio 2: imagem final com PocketBase
 # ----------------------------------------------------------------------------
-FROM scratch
+FROM debian:bookworm-slim
 
 WORKDIR /app
 
 COPY --from=builder /out/pocketbase /app/pocketbase
-COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
-COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=builder --chown=1001:1001 /out/app /app
 
 ENV TZ=America/Sao_Paulo \
