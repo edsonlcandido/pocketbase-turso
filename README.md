@@ -1,8 +1,18 @@
 # PocketBase + Turso (libSQL)
 
-Este projeto é uma implementação customizada do [PocketBase](https://pocketbase.io/) **v0.40.6** que utiliza o [Turso (libSQL)](https://turso.tech/) como banco de dados principal, em vez do SQLite local padrão.
+Este projeto é uma implementação customizada do [PocketBase](https://pocketbase.io/) **v0.41.1** que utiliza o [Turso (libSQL)](https://turso.tech/) como banco de dados principal, em vez do SQLite local padrão.
 
 Isso permite que você tenha uma instância do PocketBase rodando localmente ou em containers (Edge/Serverless) enquanto seus dados permanecem sincronizados em um banco de dados distribuído na nuvem.
+
+> ℹ️ **A partir do PB v0.41 o módulo Go mudou de host.** O autor migrou do GitHub para o próprio domínio, então os imports são:
+>
+> | Antes | Agora |
+> |---|---|
+> | `github.com/pocketbase/pocketbase` | `ganigeorgiev.com/pocketbase/pocketbase` |
+> | `github.com/pocketbase/dbx` | `ganigeorgiev.com/pocketbase/dbx` |
+> | `github.com/pocketbase/ozzo-validation/v4` | `ganigeorgiev.com/pocketbase/ozzo-validation/v4` |
+>
+> Quem for forkar este projeto precisa trocar os imports e rodar `go mod tidy`. Os binários oficiais também mudaram de URL de download: `https://ganigeorgiev.com/meta/pocketbase/pocketbase/download/{releaseTag}/{filename}`.
 
 ## 📋 Pré-requisitos
 
@@ -59,7 +69,7 @@ docker run -d --name pocketbase \
   ghcr.io/edsonlcandido/pocketbase-turso:main
 ```
 
-Tags disponíveis: `main` (último push da branch) e `latest`. Ao criar e subir uma git tag `v*.*.*` (ex.: `v0.40.6`), o CI publica também as tags `0.40.6` e `0.40`.
+Tags disponíveis: `main` (último push da branch) e `latest`. Ao criar e subir uma git tag `v*.*.*` (ex.: `v0.41.1`), o CI publica também as tags `0.41.1` e `0.41`.
 
 > A URL pode ser de **qualquer** servidor que fale o protocolo hrana v2 do libSQL — Turso, um `sqld` auto-hospedado ou um proxy (formato `https://host/dev/<namespace>/?authToken=...`). O binário só precisa de `https://` (ou `libsql://`) + o token na query string.
 
