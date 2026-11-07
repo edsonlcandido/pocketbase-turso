@@ -59,7 +59,7 @@ docker run -d --name pocketbase \
   ghcr.io/edsonlcandido/pocketbase-turso:main
 ```
 
-Tags disponíveis: `main` (último push), `v0.40.6` e `0.40` (a partir de tags `v*.*.*`).
+Tags disponíveis: `main` (último push da branch) e `latest`. Ao criar e subir uma git tag `v*.*.*` (ex.: `v0.40.6`), o CI publica também as tags `0.40.6` e `0.40`.
 
 > A URL pode ser de **qualquer** servidor que fale o protocolo hrana v2 do libSQL — Turso, um `sqld` auto-hospedado ou um proxy (formato `https://host/dev/<namespace>/?authToken=...`). O binário só precisa de `https://` (ou `libsql://`) + o token na query string.
 
