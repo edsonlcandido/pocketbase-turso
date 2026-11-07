@@ -18,11 +18,13 @@ func TestLoadTursoURLs(t *testing.T) {
 			wantErrMsg: "URL_LIBSQL_TURSO não definida",
 		},
 		{
-			name: "missing aux url",
+			// A URL auxiliar é opcional: sem ela o auxiliary.db fica local.
+			name: "missing aux url is allowed",
 			env: map[string]string{
 				"URL_LIBSQL_TURSO": "libsql://main",
 			},
-			wantErrMsg: "URL_LIBSQL_TURSO_AUX não definida",
+			wantMain: "libsql://main",
+			wantAux:  "",
 		},
 		{
 			name: "both urls provided",

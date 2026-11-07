@@ -2,3 +2,9 @@ pb_data/
 pocketbase
 pocketbase.exe
 pocketbase.exe
+
+# Segredos: a URL de conexão do Turso/libSQL carrega o token dentro da query
+# string (?authToken=). Nunca versionar.
+.env
+.env.*
+!.env.example

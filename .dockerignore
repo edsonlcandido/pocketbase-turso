@@ -5,3 +5,8 @@ pb_data
 pocketbase
 pocketbase.exe
 mymodule
+
+# Segredos: a URL do Turso/libSQL traz o token na query string (?authToken=).
+# Não pode entrar no contexto de build.
+.env
+.env.*
